@@ -1,0 +1,24 @@
+{
+    "_description": "Possible UoB",
+    "target": "kasli",
+    "min_artiq_version": "9.0",
+    "variant": "possible",
+    "hw_rev": "v2.0",
+    "base": "standalone",
+    "core_addr": "192.168.1.75",
+    "peripherals": [
+        {
+            "type": "dio",
+            "board": "DIO_SMA",
+            "ports": [0],
+            "bank_direction_low": "output",
+            "bank_direction_high": "output"
+        },
+        {
+            "type": "mirny",
+            "ports": [1],
+            "clk_sel": "mmcx",
+            "refclk": 125e6
+        }
+    ]
+}
