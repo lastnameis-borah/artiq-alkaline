@@ -9,7 +9,8 @@
     "peripherals": [
         {
             "type": "grabber",
-            "ports": [0, 1]
+            "ports": [0, 1],
+            "roi_engine_count": 32
         },
         {
             "type": "dio",
