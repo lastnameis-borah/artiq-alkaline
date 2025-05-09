@@ -215,9 +215,12 @@ device_db["eeprom_urukul0"] = {
     "type": "local",
     "module": "artiq.coredevice.kasli_i2c",
     "class": "KasliEEPROM",
-    "arguments": {"port": "EEM6"}
-}
-
+    "arguments": {
+        "port": "EEM6",
+        "busno": 0,
+        "sw0_device": "i2c_switch0",
+        "sw1_device": "i2c_switch1"}
+    }
 device_db["spi_urukul0"] = {
     "type": "local",
     "module": "artiq.coredevice.spi2",
@@ -331,9 +334,12 @@ device_db["eeprom_urukul1"] = {
     "type": "local",
     "module": "artiq.coredevice.kasli_i2c",
     "class": "KasliEEPROM",
-    "arguments": {"port": "EEM8"}
-}
-
+    "arguments": {
+        "port": "EEM8",
+        "busno": 0,
+        "sw0_device": "i2c_switch0",
+        "sw1_device": "i2c_switch1"}
+    }
 device_db["spi_urukul1"] = {
     "type": "local",
     "module": "artiq.coredevice.spi2",
