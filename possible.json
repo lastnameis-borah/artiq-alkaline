@@ -5,7 +5,6 @@
     "variant": "possible",
     "hw_rev": "v2.0",
     "drtio_role": "standalone",
-    
     "core_addr": "192.168.1.70",
     "sed_lanes": 16,
     "peripherals": [
