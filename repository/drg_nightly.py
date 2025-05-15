@@ -44,48 +44,49 @@ class ad9910_DRGSweep(EnvExperiment):
         # Sweep from 80 MHz to 81 MHz, modulation rate = 25 kHz
         # --------------------------------------------------
 
-        # Compute FTW bounds from frequency (in Hz)
-        ftw_start = self.dds.frequency_to_ftw(80e6)  # ~0x147AE147
-        ftw_stop  = self.dds.frequency_to_ftw(81e6)  # ~0x14C290E3
+        # # Compute FTW bounds from frequency (in Hz)
+        # ftw_start = self.dds.frequency_to_ftw(80e6)  # ~0x147AE147
+        # ftw_stop  = self.dds.frequency_to_ftw(81e6)  # ~0x14C290E3
 
-        # Step size and step rate (25 kHz cycle = 20 μs up + 20 μs down)
-        num_steps = 100
-        ftw_step = (ftw_stop - ftw_start) // num_steps  # ~45640
-        step_rate_cycles = 5  # SYSCLK cycles between steps (5 @ 1 GHz = 200 ns)
+        # # Step size and step rate (25 kHz cycle = 20 μs up + 20 μs down)
+        # num_steps = 100
+        # ftw_step = (ftw_stop - ftw_start) // num_steps  # ~45640
+        # step_rate_cycles = 5  # SYSCLK cycles between steps (5 @ 1 GHz = 200 ns)
 
-        # Set ramp limits
-        self.dds.write64(0x0b, ftw_stop, ftw_start)  # RAMP_LIMIT register
+        # # Set ramp limits
+        # self.dds.write64(0x0b, ftw_stop, ftw_start)  # RAMP_LIMIT register
 
-        # Set step size (same up and down)
-        self.dds.write64(0x0c, ftw_step, ftw_step)  # RAMP_STEP register
+        # # Set step size (same up and down)
+        # self.dds.write64(0x0c, ftw_step, ftw_step)  # RAMP_STEP register
 
-        # Set ramp rate
-        self.dds.write32(0x0d, (step_rate_cycles << 16) | step_rate_cycles)  # RAMP_RATE
+        # # Set ramp rate
+        # self.dds.write32(0x0d, (step_rate_cycles << 16) | step_rate_cycles)  # RAMP_RATE
 
-        # Configure CFR2: DRG destination = FTW, DRG enabled
-        self.dds.set_cfr2(drg_destination=0,  # frequency
-                          drg_enable=1,
-                          drg_nodwell_high=0,
-                          drg_nodwell_low=0)
+        # # Configure CFR2: DRG destination = FTW, DRG enabled
+        # self.dds.set_cfr2(drg_destination=0,  # frequency
+        #                     drg_enable=1,
+        #                     drg_nodwell_high=0,
+        #                     drg_nodwell_low=0)
 
-        # Enable bidirectional ramp mode in CFR1 (bit 15 = DRG_LOAD_LRR)
-        self.dds.set_cfr1(drg_load_lrr=1)
+        # # Enable bidirectional ramp mode in CFR1 (bit 15 = DRG_LOAD_LRR)
+        # self.dds.set_cfr1(drg_load_lrr=1)
 
-        # Pulse IO_UPDATE to latch config
-        self.dds.io_update.pulse(1 * us)
-
-        # self.dds.set_cfr1()  # clear back to default (drg_load_lrr=0)
+        # # Pulse IO_UPDATE to latch config
         # self.dds.io_update.pulse(1 * us)
 
-
-        # Optional: set DRCTL low so the ramp auto-reverses (handled by CPLD usually)
-        self.dds.cfg_drctl(False)
-        self.dds.cfg_drhold(False)
+        # # self.dds.set_cfr1()  # clear back to default (drg_load_lrr=0)
+        # # self.dds.io_update.pulse(1 * us)
 
 
-        # Stop DRG
-        # self.dds.set_cfr2(drg_destination=0, drg_enable=0)
-        # self.dds.io_update.pulse(1 * us)
+        # # Optional: set DRCTL low so the ramp auto-reverses (handled by CPLD usually)
+        # # self.dds.cfg_drctl(False)
+        # # self.dds.cfg_drhold(False)
+
+
+        # # Stop DRG
+        # # self.dds.set_cfr2(drg_destination=0, drg_enable=0)
+        # # self.dds.io_update.pulse(1 * us)
 
 
         print("Test complete!")
+        print(self.dds.cpld.proto_rev)
