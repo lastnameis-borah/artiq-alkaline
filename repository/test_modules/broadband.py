@@ -1,4 +1,4 @@
-import logging
+# import logging
 from typing import List
 
 from artiq.coredevice.ad9910 import AD9910
@@ -23,7 +23,7 @@ from repository.test_modules.ad9910_DRG import AD9910Ramper
 # from repository.lib.fragments.suservo import LibSetSUServoStatic
 
 
-logger = logging.getLogger(__name__)
+# logger = logging.getLogger(__name__)
 
 
 class redBroadener(EnvExperiment):
@@ -31,7 +31,7 @@ class redBroadener(EnvExperiment):
     Broadband red MOT
     """
 
-    def build_fragment(self):
+    def build(self):
         self.setattr_device("core")
         self.core: Core
 
@@ -61,63 +61,56 @@ class redBroadener(EnvExperiment):
 
         # %% PARAMETERS
 
-        self.setattr_argument(
-            "red_mot_static_freq",
+        self.setattr_argument("red_mot_static_freq")
             # FloatParam,
-            "689 AOM static frequency",
-            unit="MHz",
+            # "689 AOM static frequency",
+            # unit="MHz",
             # default=con.SFRMOT_FREQ,
-        )
+        
         # self.red_mot_static_freq: FloatParamHandle
 
-        self.setattr_argument(
-            "red_mot_static_amplitude",
+        self.setattr_argument("red_mot_static_amplitude")
             # FloatParam,
-            description="689 AOM static amplitude",
+            # description="689 AOM static amplitude",
             # default=con.SFRMOT_AMPLITUDE,
-            min=0.0,
-            max=1.0,
-        )
+            # min=0.0,
+            # max=1.0,
+        
         # self.red_mot_static_amplitude: FloatParamHandle
 
-        self.setattr_argument(
-            "red_mot_amplitude_dur_ramp",
+        self.setattr_argument("red_mot_amplitude_dur_ramp")
             # FloatParam,
-            description="689 AOM amplitude during ramp",
-            default=1.0,
-            min=0.0,
-            max=1.0,
-        )
+            # description="689 AOM amplitude during ramp",
+            # default=1.0,
+            # min=0.0,
+            # max=1.0,
+        # )
         # self.red_mot_amplitude_dur_ramp: FloatParamHandle
 
-        self.setattr_argument(
-            "ramp_frequency",
+        self.setattr_argument("ramp_frequency")
             # FloatParam,
-            "689 AOM ramp frequency",
-            unit="kHz",
+            # "689 AOM ramp frequency",
+            # unit="kHz",
             # default=con.BBRMOT_RAMP_FREQ,
-        )
+        
 
-        self.setattr_argument(
-            "ramp_lower_frequency",
+        self.setattr_argument("ramp_lower_frequency")
             # FloatParam,
-            "Frequency of 689 AOM lowest point of ramp",
-            unit="MHz",
-            default=80e6,
-        )
-        self.setattr_argument(
-            "ramp_upper_frequency",
+            # "Frequency of 689 AOM lowest point of ramp",
+            # unit="MHz",
+            # default=80e6,
+        
+        self.setattr_argument("ramp_upper_frequency")
             # FloatParam,
-            "Frequency of 689 AOM highest point of ramp",
-            unit="MHz",
-            default=81e6,
-        )
-        self.setattr_argument(
-            "ramp_type",
+            # "Frequency of 689 AOM highest point of ramp",
+            # unit="MHz",
+            # default=81e6,
+        
+        self.setattr_argument("ramp_type")
             # IntParam,
-            "689 AOM ramp type (0=triangle,1=positive-saw,2=negative-saw)",
-            default=1,
-        )
+            # "689 AOM ramp type (0=triangle,1=positive-saw,2=negative-saw)",
+            # default=1,
+        
 
         # self.ramp_frequency: FloatParamHandle
         # self.ramp_lower_frequency: FloatParamHandle
@@ -169,19 +162,6 @@ class redBroadener(EnvExperiment):
         self.urukul0_ch0.cfg_sw(True)
         self.urukul0_ch0.sw.on()
 
-    # @kernel
-    # def init(self):
-    #     """
-    #     Set up beam state for the red MOT, i.e. set up AOMs and close all shutters
-
-    #     This is not in device_setup so that the user can choose when / whether to call it during each scan cycle
-    #     """
-    # Turn on all the AOMs but close all the shutters
-    # self.all_beam_default_setter.turn_on_all(shutter_state=False)
-
-    # Make sure that the shutters are closed before run_once starts
-    # delay(self.all_beam_default_setter.get_max_shutter_delay())
-
     @kernel
     def turn_on_red_mot_aom(self):
         self.urukul0_ch0.init()
@@ -203,12 +183,10 @@ class redBroadener(EnvExperiment):
 
     @kernel
     def amplitude_update(self, amp):
-        # self.urukul0_ch00.set_amplitude(amp) # didnt work
         self.urukul0_ch0.set(frequency=self.red_mot_static_freq.get(), amplitude=amp)
 
     @kernel
     def amp_freq_update(self, amp, freq):
-        # self.urukul0_ch00.set_amplitude(amp) # didnt work
         self.urukul0_ch0.set(frequency=freq, amplitude=amp)
 
     @kernel
@@ -264,61 +242,3 @@ class redBroadener(EnvExperiment):
             self.urukul0_ch0.set(
                 frequency=freq, amplitude=self.red_mot_static_amplitude.get()
             )
-
-    # @kernel
-    # def set_mot_detuning(self, detuning: TFloat):
-    #     """Set the detuning of the MOT beams from the static frequency
-
-    #     Does not affect ramp settings and so will have no effect if ramping is
-    #     enabled.
-
-    #     This method advances the timeline by the duration of an AD9910 SPI
-    #     transaction.
-
-    #     Args:
-    #         detuning (float): Detuning in Hz
-    #     """
-    #     freq = (
-    #         constants.RED_INJECTION_AOM_FREQUENCY
-    #         + self.urukul0_ch0_static_detuning.get()
-    #         + detuning
-    #     )
-
-    #     if self.debug_mode:
-    #         logger.info(
-    #             "Setting AOM detuning to %.3f kHz = %.6f MHz on %s",
-    #             detuning * 1e-3,
-    #             freq * 1e-6,
-    #             self.urukul0_ch0,
-    #         )
-
-    #     self.urukul0_ch0.set(freq)
-
-    # @kernel
-    # def set_mot_suservo_amplitude(self, amplitude_multiple: TFloat):
-    #     """
-    #     Set the SUServo target amplitudes of all MOT beams
-
-    #     Args:
-    #         amplitude_multiple (TFloat): Amplitude of MOT beams, expressed as a multiple of the nominal amplitude
-    #     """
-
-    #     for i in range(len(self.suservo_fragments)):
-
-    #         suservo_frag = self.suservo_fragments[i]
-    #         nominal_setpoint = self.suservo_nominal_amplitudes[i]
-    #         photodiode_offset = self.suservo_setpoint_offsets[i]
-
-    #         setpoint = nominal_setpoint * amplitude_multiple + photodiode_offset
-
-    #         if self.debug_mode:
-    #             logger.info(
-    #                 "Setting %s setpoint to %.2f x %.2f + %.4f = %.3f V",
-    #                 suservo_frag,
-    #                 amplitude_multiple,
-    #                 nominal_setpoint,
-    #                 photodiode_offset,
-    #                 setpoint,
-    #             )
-
-    #         suservo_frag.set_setpoint(setpoint)

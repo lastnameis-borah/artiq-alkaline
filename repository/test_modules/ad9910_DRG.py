@@ -30,14 +30,14 @@ class AD9910Ramper(EnvExperiment):
     Trying to ramp the damn freq
     """
 
-    def build_fragment(self, channel):
+    def build(self, channel):
         self.setattr_device("core")
         self.core: Core
 
         self.channel = channel
 
     @kernel
-    def run_once(self):
+    def run(self):
         print("this new one works")
 
     # def host_setup(self):
