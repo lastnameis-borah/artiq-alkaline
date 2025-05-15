@@ -79,8 +79,8 @@ class ad9910_DRGSweep(EnvExperiment):
 
 
         # Optional: set DRCTL low so the ramp auto-reverses (handled by CPLD usually)
-        # self.dds.cfg_drctl(False)
-        # self.dds.cfg_drhold(False)
+        self.dds.cfg_drctl(False)
+        self.dds.cfg_drhold(False)
 
 
         # Stop DRG
