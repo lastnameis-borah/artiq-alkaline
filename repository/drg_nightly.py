@@ -46,7 +46,7 @@ class ad9910_DRGSweep(EnvExperiment):
 
         # Compute FTW bounds from frequency (in Hz)
         ftw_start = self.dds.frequency_to_ftw(80e6)  # ~0x147AE147
-        ftw_stop  = self.dds.frequency_to_ftw(85e6)  # ~0x14C290E3
+        ftw_stop  = self.dds.frequency_to_ftw(81e6)  # ~0x14C290E3
 
         # Step size and step rate (25 kHz cycle = 20 μs up + 20 μs down)
         num_steps = 100
@@ -74,8 +74,13 @@ class ad9910_DRGSweep(EnvExperiment):
         # Pulse IO_UPDATE to latch config
         self.dds.io_update.pulse(1 * us)
 
+        # self.dds.set_cfr1()  # clear back to default (drg_load_lrr=0)
+        # self.dds.io_update.pulse(1 * us)
+
+
         # Optional: set DRCTL low so the ramp auto-reverses (handled by CPLD usually)
         # self.dds.cfg_drctl(False)
+        # self.dds.cfg_drhold(False)
 
 
         # Stop DRG
