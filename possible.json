@@ -36,14 +36,16 @@
             "dds": "ad9910",
             "hw_rev": "v1.5",
             "ports": [6, 7],
-            "clk_sel": 2
+            "clk_sel": 2,
+            "proto_rev": 9
         },
         {
             "type": "urukul",
             "dds": "ad9910",
             "hw_rev": "v1.5",
             "ports": [8, 9],
-            "clk_sel": 2
+            "clk_sel": 2,
+            "proto_rev": 9
         },
         {
             "type": "fastino",
