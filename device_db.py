@@ -274,7 +274,7 @@ device_db["urukul0_cpld"] = {
         "refclk": 125000000.0,
         "clk_sel": 2,
         "clk_div": 0,
-        "proto_rev": 9
+        "proto_rev": 8
     }
 }
 
