@@ -1,3 +1,5 @@
+# Copied from ARTIQ forum post
+
 from artiq.experiment import *
 from artiq.coredevice import ad9910
 from mqva_control.experiment import MQVAExperiment
