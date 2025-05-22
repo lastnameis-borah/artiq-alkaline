@@ -24,7 +24,7 @@ __pycache__/
 # /artiq/test/results
 # /artiq/examples/*/results
 # /artiq/examples/*/last_rid.pyon
-# /artiq/examples/*/dataset_db.mdb
+# /artiq/examples/*/dataset_db.mdIf you do not want to install the current project use --no-root.b
 # /artiq/examples/*/dataset_db.mdb-lock
 
 # when testing ad-hoc experiments at the root:
