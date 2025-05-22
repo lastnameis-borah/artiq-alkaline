@@ -33,9 +33,9 @@ class ad9910_DRGSweep(EnvExperiment):
         self.dds.init()
         self.dds.sw.on()
 
-        self.dds.set_att(0.0)
-        # self.dds.set_amplitude(1.0)
-        # self.dds.set_frequency(80e6)
+        self.dds.set_att(10.0)
+        self.dds.set_amplitude(1.0)
+        self.dds.set_frequency(80e6)
         
         
         self.dds.set(frequency=80 * MHz, amplitude=1.0)
