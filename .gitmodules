@@ -1,3 +1,6 @@
 [submodule "ndscan"]
 	path = ndscan
 	url = https://github.com/lastnameis-borah/ndscan.git
+[submodule "oitg"]
+	path = oitg
+	url = https://github.com/lastnameis-borah/oitg.git
