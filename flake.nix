@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # inputs.poetry2nix.url = "github:nix-community/poetry2nix";
 
     rust-overlay = {
       url = "github:oxalica/rust-overlay?ref=snapshot/2024-08-01";
@@ -46,6 +47,7 @@
   outputs = {
     self,
     nixpkgs,
+    poetry2nix,
     rust-overlay,
     naersk,
     sipyco,
