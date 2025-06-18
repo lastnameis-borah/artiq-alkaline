@@ -4,6 +4,10 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     # inputs.poetry2nix.url = "github:nix-community/poetry2nix";
+    poetry2nix = {
+      url = "github:nix-community/poetry2nix";
+      inputs.nixpkgs.follows = "nixpkgs"; # Ensures it uses the same nixpkgs
+    };
 
     rust-overlay = {
       url = "github:oxalica/rust-overlay?ref=snapshot/2024-08-01";
